@@ -9,7 +9,6 @@ from pathlib import Path
 import logging
 import struct
 
-from core.services.privilege_manager import is_elevated
 from core.interfaces.disk_reader import (
     DiskReader, DiskGeometry, PartitionInfo,
     DiskReaderError, AccessDeniedError, InvalidDeviceError, ReadError
@@ -164,6 +163,7 @@ class WindowsDiskReader(DiskReader):
             return True
 
         if self.device_path and self.device_path.lower().startswith("\\\\.\\"):
+            from core.services.privilege_manager import is_elevated
             if not is_elevated():
                 raise AccessDeniedError(
                     f"Administrator privileges are required to open raw disk access path '{self.device_path}'. "

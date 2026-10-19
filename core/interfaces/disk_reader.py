@@ -81,7 +81,10 @@ class DiskInfo:
 class DiskReader(ABC):
     """Abstract base class for disk readers."""
     
-    def __init__(self, disk_info: DiskInfo):
+    def __init__(self, disk_info):
+        if isinstance(disk_info, (str, Path)):
+            disk_info = DiskInfo(device_type=DeviceType.VIRTUAL, device_path=str(disk_info),
+                                 total_size=0, manufacturer="", model="")
         self._disk_info = disk_info
         self._is_open = False
     

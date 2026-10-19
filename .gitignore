@@ -73,3 +73,5 @@ temp/
 recovered_files/
 test_output/
 *.img
+
+recovered_test/

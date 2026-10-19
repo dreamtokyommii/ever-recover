@@ -13,7 +13,7 @@ from infrastructure.disk.factory import create_disk_reader
 from core.services.recovery_engine import RecoveryEngine, RecoveryConfig
 from core.services.carving_engine import CarvingEngine
 from core.services.report_generator import ReportGenerator, ReportMetadata
-from core.models.file_entry import FileCategory, RecoveryConfidence
+from core.models.file_entry import FileCategory, FileEntry, RecoveryConfidence
 from ai.classifiers.file_classifier import FileClassifier, SmartRecoverySorter
 
 try:
@@ -334,9 +334,9 @@ def main():
         scan_file_system=not hasattr(args, 'no_carving') or not args.no_carving,
         scan_carving=not hasattr(args, 'no_carving') or not args.no_carving,
         recover_deleted=True,
-        min_confidence=getattr(RecoveryConfidence, args.min_confidence, RecoveryConfidence.LOW),
+        min_confidence=getattr(RecoveryConfidence, getattr(args, 'min_confidence', 'LOW'), RecoveryConfidence.LOW),
         categories=categories,
-        max_file_size=getattr(args, 'max_size', 0) * 1024 * 1024 if hasattr(args, 'max_size') else 0,
+        max_file_size=(getattr(args, 'max_size', 0) or 0) * 1024 * 1024,
     )
     
     try:

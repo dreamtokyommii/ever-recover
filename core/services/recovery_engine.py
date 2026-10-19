@@ -127,6 +127,8 @@ class RecoveryEngine:
             Scan result with all found files
         """
         logger.info("Starting recovery scan...")
+        if hasattr(self.disk_reader, "is_open") and not self.disk_reader.is_open:
+            self.disk_reader.open()
         self._start_time = datetime.now()
         self._files.clear()
         self._is_cancelled = False

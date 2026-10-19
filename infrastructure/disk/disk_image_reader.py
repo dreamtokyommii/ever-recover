@@ -50,6 +50,7 @@ class DiskImageReader(DiskReader):
         """
         super().__init__(image_path)
         self._file = None
+        self._total_size = 0
         self._metadata: Optional[ImageMetadata] = None
         self._format = self._detect_format()
     
