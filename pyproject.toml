@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ever-recover"
+version = "1.0.0"
+description = "Professional Digital Forensics & File Recovery Tool"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Ever Recover Team", email = "support@ever-recover.com"}
+]
+keywords = [
+    "forensics",
+    "data-recovery",
+    "file-recovery",
+    "digital-investigation",
+    "forensic-analysis"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Security",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "PyQt6>=6.4.0",
+    "reportlab>=4.0.0",
+    "numpy>=1.24.0",
+    "tqdm>=4.65.0",
+    "psutil>=5.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.3.0",
+    "pytest>=7.3.0",
+    "pytest-cov>=4.1.0",
+]
+
+[project.scripts]
+ever-recover = "ever_recover:main"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/ever-recover"
+Documentation = "https://ever-recover.readthedocs.io"
+Repository = "https://github.com/yourusername/ever-recover"
+Issues = "https://github.com/yourusername/ever-recover/issues"
+
+[tool.setuptools]
+packages = ["ai", "ai.classifiers", "application", "application.scanning", "cli", "core", "core.interfaces", "core.models", "core.services", "infrastructure", "infrastructure.disk", "infrastructure.filesystems", "infrastructure.signatures", "presentation", "presentation.styles", "presentation.widgets"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310', 'py311', 'py312']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | \.eggs
+  | \.tox
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false

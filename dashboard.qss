@@ -1,0 +1,418 @@
+QWidget {
+    background-color: #08111c;
+    color: #e8eef7;
+    font-family: "Segoe UI";
+    font-size: 12px;
+}
+
+QScrollArea {
+    border: none;
+    background: transparent;
+}
+
+QScrollArea > QWidget > QWidget {
+    background: transparent;
+}
+
+QFrame[class="Panel"] {
+    background-color: #0d1726;
+    border: 1px solid #243246;
+    border-radius: 14px;
+}
+
+QFrame[class="Card"] {
+    background-color: #0f1a2b;
+    border: 1px solid #25354a;
+    border-radius: 12px;
+}
+
+QFrame[class="Card"]:hover {
+    border: 1px solid #3b5f86;
+    background-color: #122033;
+}
+
+QFrame#TopHeaderPanel,
+QFrame#WorkspacePanel,
+QFrame#BottomRoadmapPanel {
+    background-color: #0d1726;
+    border: 1px solid #243246;
+    border-radius: 14px;
+}
+
+QFrame#LeftNavPanel,
+QFrame#CenterWorkspace,
+QFrame#RightInsightsPanel {
+    background-color: #0d1726;
+    border: 1px solid #243246;
+    border-radius: 14px;
+}
+
+QLabel#BrandTitle {
+    font-size: 30px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+
+QLabel#BrandAccent {
+    color: #4db3ff;
+}
+
+QLabel#BrandSubtitle {
+    color: #9eb0c6;
+    font-size: 11px;
+}
+
+QLabel#SectionTitle,
+QLabel#ModuleTitle,
+QLabel#NavTitle {
+    color: #f4f7fb;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+QLabel#StatusChip {
+    color: #69d37a;
+    background-color: #10231a;
+    border: 1px solid #1e5130;
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-weight: 600;
+}
+
+QListWidget {
+    background: transparent;
+    border: none;
+    outline: 0;
+}
+
+QListWidget::item {
+    padding: 10px 12px;
+    margin: 4px 6px;
+    border-radius: 10px;
+    color: #d8e2ef;
+}
+
+QListWidget::item:selected {
+    background-color: #15253a;
+    border: 1px solid #2c4c73;
+}
+
+QListWidget::item:hover {
+    background-color: #121f31;
+}
+
+QToolButton {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 6px 10px;
+    color: #e8eef7;
+}
+
+QToolButton:hover {
+    background-color: #15253a;
+    border: 1px solid #2c4c73;
+}
+
+QPushButton {
+    background-color: #142235;
+    border: 1px solid #2b4059;
+    border-radius: 10px;
+    padding: 8px 12px;
+    color: #e8eef7;
+}
+
+QPushButton:hover {
+    background-color: #19304a;
+    border: 1px solid #4a78a8;
+}
+
+QPushButton[variant="primary"] {
+    background-color: #1f6feb;
+    border: 1px solid #2c81ff;
+    color: white;
+}
+
+QPushButton[variant="primary"]:hover {
+    background-color: #2b7fff;
+}
+
+/* ---------- Form inputs ---------- */
+
+QLineEdit, QComboBox, QTextEdit, QPlainTextEdit {
+    background-color: #0b1420;
+    border: 1px solid #25354a;
+    border-radius: 8px;
+    padding: 8px 10px;
+    selection-background-color: #1f6feb;
+    color: #e8eef7;
+}
+
+QLineEdit:hover, QComboBox:hover, QTextEdit:hover, QPlainTextEdit:hover {
+    border: 1px solid #3b5f86;
+}
+
+QLineEdit:focus, QComboBox:focus, QTextEdit:focus, QPlainTextEdit:focus {
+    border: 1px solid #4a78a8;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 22px;
+    border-left: 1px solid #25354a;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: #0b1420;
+}
+
+QComboBox::down-arrow {
+    image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #9fb3c8;
+    margin-right: 6px;
+}
+
+/* ---------- Group boxes (Settings sections) ---------- */
+
+QGroupBox {
+    background-color: #0b1420;
+    border: 1px solid #25354a;
+    border-radius: 10px;
+    margin-top: 12px;
+    padding-top: 12px;
+    font-weight: 600;
+    color: #f4f7fb;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 10px;
+    padding: 0 6px;
+    color: #9fb3c8;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ---------- Checkboxes and radios ---------- */
+
+QCheckBox, QRadioButton {
+    spacing: 8px;
+    color: #e8eef7;
+}
+
+QCheckBox::indicator, QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid #25354a;
+    background-color: #0b1420;
+}
+
+QCheckBox::indicator:hover, QRadioButton::indicator:hover {
+    border: 1px solid #3b5f86;
+}
+
+QCheckBox::indicator:checked {
+    background-color: #1f6feb;
+    border: 1px solid #2c81ff;
+}
+
+/* Simple check mark using gradient trick */
+QCheckBox::indicator:checked {
+    image: none;
+}
+
+/* Radio: make indicator round */
+QRadioButton::indicator {
+    border-radius: 8px;
+}
+
+QRadioButton::indicator:checked {
+    background-color: #1f6feb;
+    border: 1px solid #2c81ff;
+}
+
+/* ---------- Tables ---------- */
+
+QTableWidget {
+    background-color: #0b1420;
+    alternate-background-color: #0f1a2b;
+    border: 1px solid #25354a;
+    gridline-color: #223145;
+    selection-background-color: #17314f;
+    selection-color: #ffffff;
+    border-radius: 10px;
+}
+
+QHeaderView::section {
+    background-color: #101c2c;
+    color: #9eb0c6;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #25354a;
+    font-weight: 600;
+}
+
+/* ---------- Progress bars ---------- */
+
+QProgressBar {
+    background-color: #0b1420;
+    border: 1px solid #25354a;
+    border-radius: 8px;
+    text-align: center;
+    color: #ffffff;
+    height: 18px;
+}
+
+QProgressBar::chunk {
+    border-radius: 8px;
+    background-color: #2d8cff;
+}
+
+/* ---------- Badges / roadmap / cards ---------- */
+
+QFrame[class="Badge"] {
+    background-color: #101c2c;
+    border: 1px solid #25354a;
+    border-radius: 12px;
+    min-width: 110px;
+    min-height: 72px;
+}
+
+QFrame[class="Badge"]:hover {
+    border: 1px solid #4a78a8;
+    background-color: #132136;
+}
+
+QFrame[class="RoadmapCard"] {
+    background-color: #0f1a2b;
+    border: 1px solid #25354a;
+    border-radius: 12px;
+    min-width: 160px;
+    max-width: 180px;
+    min-height: 140px;
+}
+
+QFrame[class="RoadmapCard"]:hover {
+    border: 1px solid #4a78a8;
+    background-color: #132136;
+}
+
+QLabel[role="badgeTitle"] {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+QLabel[role="badgeText"] {
+    color: #8fa3bb;
+    font-size: 10px;
+}
+
+QLabel[role="stepNumber"] {
+    color: #4db3ff;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+QLabel[role="stepTitle"] {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+QLabel[role="stepText"] {
+    color: #a2b2c5;
+    font-size: 11px;
+}
+
+QLabel[state="success"] {
+    color: #69d37a;
+}
+
+QLabel[state="warning"] {
+    color: #f2c94c;
+}
+
+QLabel[state="error"] {
+    color: #ff7b72;
+}
+
+QFrame#ScanProgressCard,
+QFrame#DeviceInfoCard,
+QFrame#RecoveryStatsCard,
+QFrame#FilesTableCard,
+QFrame#PreviewCard,
+QFrame#BottomStatusStrip {
+    padding: 10px;
+}
+
+/* ---------- Stats labels ---------- */
+
+QLabel#StatValue {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+QLabel#StatTitle {
+    color: #9fb3c8;
+    font-size: 11px;
+}
+
+QLabel#StatSubtext {
+    color: #7a8fa6;
+    font-size: 10px;
+}
+
+QLabel#ModuleDescription {
+    color: #a2b2c5;
+    font-size: 11px;
+}
+
+/* ---------- Scan page timeline ---------- */
+
+QLabel#TimelineLabel {
+    color: #4db3ff;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+QLabel#ScanStatusLabel {
+    color: #9fb3c8;
+    font-size: 12px;
+}
+
+/* ---------- Settings page tweaks ---------- */
+
+QFrame#SettingsPage,
+QFrame#ScanPage,
+QFrame#DashboardPage {
+    background: transparent;
+}
+
+/* Ensure QFormLayout labels look good */
+QFormLayout QLabel {
+    color: #c7d4e6;
+    font-size: 12px;
+}
+
+/* Optional: stronger focus for combos/lineedits in settings */
+QFrame#SettingsPage QLineEdit,
+QFrame#SettingsPage QComboBox {
+    background-color: #0b1420;
+    border: 1px solid #25354a;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: #e8eef7;
+    selection-background-color: #1f6feb;
+}
+
+QFrame#SettingsPage QLineEdit:focus,
+QFrame#SettingsPage QComboBox:focus {
+    border: 1px solid #4a78a8;
+}
