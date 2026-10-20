@@ -1,4 +1,4 @@
-\# Ever Recover
+# Ever Recover
 
 
 
@@ -10,7 +10,7 @@ A Python tool for recovering deleted files from disk images and drives. It has a
 
 
 
-\## Demo
+## Demo
 
 
 
@@ -30,7 +30,7 @@ The other \~524 results are low-quality matches from the random filler data. On 
 
 
 
-\## What it does
+## What it does
 
 
 
@@ -46,7 +46,7 @@ The other \~524 results are low-quality matches from the random filler data. On 
 
 
 
-\## Install
+## Install
 
 
 
@@ -66,7 +66,7 @@ Python 3.10 or newer.
 
 
 
-\## Usage
+## Usage
 
 
 
@@ -110,7 +110,7 @@ Only use it on disks and images you own or are authorised to examine.
 
 
 
-\## Tests
+## Tests
 
 
 
@@ -126,7 +126,7 @@ Regression tests include byte-exact (SHA-256) recovery of carved JPEG, AVI and M
 
 
 
-\## Known limitations
+## Known limitations
 
 
 
@@ -148,7 +148,7 @@ More detail: \[CHANGES\_AND\_LIMITATIONS.md](CHANGES\_AND\_LIMITATIONS.md).
 
 
 
-\## Licence
+## Licence
 
 
 
