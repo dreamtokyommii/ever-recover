@@ -782,31 +782,32 @@ class DashboardPage(QWidget):
         self.detail_scan_type.setText(self._settings.get('scan_type', '-') if hasattr(self, '_settings') else '-')
         self.detail_fs.setText(self._settings.get('filesystem', '-'))
 
-    def update_stats(self, total: int, recoverable: int, deleted: int, elapsed: int):
+    def update_stats(self, total: int, recoverable: int, deleted: int, elapsed: int,
+                     high: int = 0, medium: int = 0, low: int = 0, carved: int = 0):
         self.total_card.set_value(str(total))
         self.recoverable_card.set_value(str(recoverable))
-        self.high_card.set_value(str(0))
-        self.medium_card.set_value(str(0))
-        self.low_card.set_value(str(0))
-        self.carved_card.set_value(str(0))
+        self.high_card.set_value(str(high))
+        self.medium_card.set_value(str(medium))
+        self.low_card.set_value(str(low))
+        self.carved_card.set_value(str(carved))
         self.detail_elapsed.setText(f"{elapsed}s")
         stats_html = (
             "<span style='color:#4db3ff;'>Files found: {}</span><br>"
             "<span style='color:#7ed321;'>Recoverable: {}</span><br>"
-            "<span style='color:#70e000;'>High confidence: 0</span><br>"
-            "<span style='color:#f5a623;'>Medium confidence: 0</span><br>"
-            "<span style='color:#ff6f61;'>Low confidence: 0</span><br>"
-            "<span style='color:#a26cff;'>Carved files: 0</span>"
-        ).format(total, recoverable)
+            "<span style='color:#70e000;'>High confidence: {}</span><br>"
+            "<span style='color:#f5a623;'>Medium confidence: {}</span><br>"
+            "<span style='color:#ff6f61;'>Low confidence: {}</span><br>"
+            "<span style='color:#a26cff;'>Carved files: {}</span>"
+        ).format(total, recoverable, high, medium, low, carved)
         if self.stats_label is not None:
             self.stats_label.setText(stats_html)
         if hasattr(self, 'right_files_found'):
             self.right_files_found.setText(f"<span style='color:#4db3ff;'>Files found: {total}</span>")
             self.right_recoverable.setText(f"<span style='color:#7ed321;'>Recoverable: {recoverable}</span>")
-            self.right_high_confidence.setText("<span style='color:#70e000;'>High confidence: 0</span>")
-            self.right_medium_confidence.setText("<span style='color:#f5a623;'>Medium confidence: 0</span>")
-            self.right_low_confidence.setText("<span style='color:#ff6f61;'>Low confidence: 0</span>")
-            self.right_carved.setText("<span style='color:#a26cff;'>Carved files: 0</span>")
+            self.right_high_confidence.setText(f"<span style='color:#70e000;'>High confidence: {high}</span>")
+            self.right_medium_confidence.setText(f"<span style='color:#f5a623;'>Medium confidence: {medium}</span>")
+            self.right_low_confidence.setText(f"<span style='color:#ff6f61;'>Low confidence: {low}</span>")
+            self.right_carved.setText(f"<span style='color:#a26cff;'>Carved files: {carved}</span>")
         self._append_log("Scan results loaded into Files and Report pages.")
 
     def set_settings(self, settings: dict):
@@ -1572,11 +1573,17 @@ class MainWindow(QMainWindow):
 
     def _on_scan_completed(self, scan_result, files: list, summary: dict):
         self._scan_result = scan_result
+        levels = [str(r.get("confidence", "")).upper() for r in files]
+        carved = sum(1 for r in files if getattr(r.get("entry"), "is_carved", False))
         self._dashboard_page.update_stats(
             total=summary["total_files"],
             recoverable=summary["recoverable_files"],
             deleted=summary["deleted_files"],
             elapsed=summary["duration"],
+            high=sum(1 for c in levels if c in ("EXCELLENT", "HIGH")),
+            medium=sum(1 for c in levels if c == "MEDIUM"),
+            low=sum(1 for c in levels if c in ("LOW", "POOR")),
+            carved=carved,
         )
         self._files_page.load_files(files)
         self._report_page.set_scan_data(summary, files)
