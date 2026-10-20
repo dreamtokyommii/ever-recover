@@ -1,101 +1,156 @@
-# 🔍 Ever Recover - Professional Digital Forensics \& File Recovery Tool
+\# Ever Recover
 
-**Version:** 1.0.0  
-**Build Date:** July 2026  
-**License:** MIT
 
-\---
 
-## 📋 Overview
+A Python tool for recovering deleted files from disk images and drives. It has a PyQt6 desktop GUI and a command-line interface. It combines filesystem parsing (to find deleted entries) with signature-based file carving (to find file data when the filesystem records are gone).
 
-Ever Recover is a comprehensive digital forensics and file recovery solution designed for:
 
-* **Data Recovery Professionals** - Recover deleted files from damaged or formatted drives
-* **Digital Forensics Investigators** - Generate court-admissible forensic reports
-* **IT Security Teams** - Analyze disk images and extract evidence
-* **General Users** - Recover accidentally deleted files
 
-### ✨ Key Features
+> A learning project in digital forensics. Read \[Known limitations](#known-limitations) before relying on it.
 
-* 🗂️ **File System Parsing** - NTFS, FAT32, exFAT, EXT4 support
-* 🔎 **Signature-Based Carving** - 37+ file types (JPEG, PNG, PDF, DOCX, etc.)
-* 🤖 **AI-Powered Classification** - Automatic file type detection and corruption analysis
-* 📊 **Forensic Reports** - PDF, HTML, CSV, JSON export
-* ⚡ **Multi-threaded Recovery** - Up to 8x faster with parallel processing
-* 🖥️ **Dual Interface** - Professional GUI and powerful CLI
-* 📈 **Smart Prioritization** - AI-driven recovery queue management
-* 🔒 **Chain of Custody** - Built-in evidence tracking
 
-\---
 
-## 🚀 Quick Start
+\## Demo
 
-### Installation
+
+
+I hid a real 49,368-byte JPEG inside an 8 MB disk image of random data and ran a hybrid scan. The tool carved it back out, rated it the only High Confidence result, and recovered it at the same size.
+
+
+
+!\[Dashboard after scanning the test image](screenshots/gui-dashboard.png)
+
+!\[Files page](screenshots/gui-files.png)
+
+!\[Recovered photo](screenshots/recovered-photo.png)
+
+
+
+The other \~524 results are low-quality matches from the random filler data. On a real disk, expect some noise too, so check the confidence rating.
+
+
+
+\## What it does
+
+
+
+\- \*\*File carving:\*\* finds files by signature (37 file types, including JPEG, PNG, PDF, Office documents, ZIP, MP4/MOV, AVI, WAV, MKV/WebM, FLV). Sizes come from each format's own structure (RIFF chunks, MP4 boxes, EBML segments, ZIP end-of-central-directory, FLV tags) rather than guesses.
+
+\- \*\*Filesystem parsing:\*\* NTFS and FAT32 parsers, plus a from-scratch ext2/3/4 parser (superblock, block groups, inodes, extent trees, deleted-inode scan).
+
+\- \*\*Confidence ratings:\*\* each result is rated from Excellent down to Low, and the rating drops when a file's size could not be verified.
+
+\- \*\*Reports:\*\* recovery reports with case number and examiner fields (PDF, HTML, CSV, JSON).
+
+\- \*\*Classification:\*\* extension- and entropy-based classification and corruption checks (heuristics, not machine learning).
+
+
+
+\## Install
+
+
 
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/ever-recover.git
+
+git clone https://github.com/dreamtokyommii/ever-recover.git
+
 cd ever-recover
 
-# Install dependencies
 pip install -r requirements.txt
 
-# Optional: Install for better CLI experience
-pip install tqdm
 ```
 
-### Requirements
 
-* **Python:** 3.10+
-* **PyQt6:** GUI interface
-* **ReportLab:** PDF generation
-* **NumPy:** AI classification
-* **Tqdm:** Progress bars (optional)
 
-\---
+Python 3.10 or newer.
 
-## 📖 Usage
 
-### GUI Mode
+
+\## Usage
+
+
+
+\*\*Source must be a disk image or a drive.\*\* Pointing the GUI at an ordinary folder only copies files that still exist and cannot recover deleted ones.
+
+
+
+GUI:
+
+
 
 ```bash
+
 python ever\_recover.py
+
 ```
 
-**Steps:**
 
-1. Select device or disk image (E01, IMG, RAW)
-2. Configure scan options (file types, confidence filters)
-3. Start scan and review results
-4. Recover files with one click
-5. Generate forensic reports
 
-### CLI Mode
+Open \*\*Settings\*\*, choose a disk image as the source (click \*\*Browse\*\*, cancel the folder dialog, then pick the image file in the second dialog), pick an existing output folder on a \*different\* drive, click \*\*Apply Settings\*\*, then run the scan from the \*\*Dashboard\*\*.
+
+
+
+CLI (run from the project folder):
+
+
 
 ```bash
-# Scan disk image
-python ever\_recover.py scan disk\_image.e01 -o ./recovered
 
-# Recover with filters
-python ever\_recover.py scan /dev/sdb1 -o ./output \\
-  --categories IMAGE,DOCUMENT \\
-  --min-confidence HIGH
+python -m cli.cli scan disk.img -o out/
 
-# Full workflow
-python ever\_recover.py full disk\_image.e01 -o ./output --all-reports
+python -m cli.cli recover disk.img -o out/ --all
 
-# Generate report only
-python ever\_recover.py report disk\_image.e01 -o ./report --format pdf --case "CASE-2026-001"
+python -m cli.cli report disk.img -o out/ --case CASE-001 --examiner "Your Name"
+
 ```
 
-### Demo Mode
+
+
+Only use it on disks and images you own or are authorised to examine.
+
+
+
+\## Tests
+
+
 
 ```bash
-# Run built-in demo
-python ever\_recover.py --demo
+
+python -m pytest tests/ -v
+
 ```
 
-\---
 
-## 📁 Project Structure
+
+Regression tests include byte-exact (SHA-256) recovery of carved JPEG, AVI and MP4 files, including headers that straddle read-chunk boundaries, and recovery from a real `mkfs.ext4` image (skipped if `mkfs.ext4` or root is unavailable). GUI tests need PyQt6. One test that exercises a Windows-only device path fails when run on Linux.
+
+
+
+\## Known limitations
+
+
+
+\- APFS and HFS+ are not implemented; they report an error instead of pretending to scan.
+
+\- The Windows drive-access code (UAC elevation, `\\\\.\\PhysicalDriveN`, removable-drive detection) has not been tested on real hardware. Test on disk images first.
+
+\- On ext4, deleted files often have their size and extent pointers cleared by the filesystem, so metadata recovery can fail and carving is the fallback.
+
+\- Footer-based carving (e.g. JPEG) can be fooled by an embedded thumbnail's end marker.
+
+\- ext4 64-bit block group descriptors and large indexed (htree) directories are not supported.
+
+\- Carving random or heavily compressed data produces many false positives.
+
+
+
+More detail: \[CHANGES\_AND\_LIMITATIONS.md](CHANGES\_AND\_LIMITATIONS.md).
+
+
+
+\## Licence
+
+
+
+MIT. See \[LICENSE](LICENSE).
 
