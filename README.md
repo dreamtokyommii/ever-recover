@@ -6,7 +6,7 @@ A Python tool for recovering deleted files from disk images and drives. It has a
 
 
 
-> A learning project in digital forensics. Read \[Known limitations](#known-limitations) before relying on it.
+> A learning project in digital forensics. Read [Known limitations](#known-limitations) before relying on it.
 
 
 
@@ -18,15 +18,15 @@ I hid a real 49,368-byte JPEG inside an 8 MB disk image of random data and ran a
 
 
 
-!\[Dashboard after scanning the test image](screenshots/gui-dashboard.png)
+![Dashboard after scanning the test image](screenshots/gui-dashboard.png)
 
-!\[Files page](screenshots/gui-files.png)
+![Files page](screenshots/gui-files.png)
 
-!\[Recovered photo](screenshots/recovered-photo.png)
+![Recovered photo](screenshots/recovered-photo.png)
 
 
 
-The other \~524 results are low-quality matches from the random filler data. On a real disk, expect some noise too, so check the confidence rating.
+The other ~524 results are low-quality matches from the random filler data. On a real disk, expect some noise too, so check the confidence rating.
 
 
 
@@ -34,15 +34,15 @@ The other \~524 results are low-quality matches from the random filler data. On 
 
 
 
-\- \*\*File carving:\*\* finds files by signature (37 file types, including JPEG, PNG, PDF, Office documents, ZIP, MP4/MOV, AVI, WAV, MKV/WebM, FLV). Sizes come from each format's own structure (RIFF chunks, MP4 boxes, EBML segments, ZIP end-of-central-directory, FLV tags) rather than guesses.
+- **File carving:** finds files by signature (37 file types, including JPEG, PNG, PDF, Office documents, ZIP, MP4/MOV, AVI, WAV, MKV/WebM, FLV). Sizes come from each format's own structure (RIFF chunks, MP4 boxes, EBML segments, ZIP end-of-central-directory, FLV tags) rather than guesses.
 
-\- \*\*Filesystem parsing:\*\* NTFS and FAT32 parsers, plus a from-scratch ext2/3/4 parser (superblock, block groups, inodes, extent trees, deleted-inode scan).
+- **Filesystem parsing:** NTFS and FAT32 parsers, plus a from-scratch ext2/3/4 parser (superblock, block groups, inodes, extent trees, deleted-inode scan).
 
-\- \*\*Confidence ratings:\*\* each result is rated from Excellent down to Low, and the rating drops when a file's size could not be verified.
+- **Confidence ratings:** each result is rated from Excellent down to Low, and the rating drops when a file's size could not be verified.
 
-\- \*\*Reports:\*\* recovery reports with case number and examiner fields (PDF, HTML, CSV, JSON).
+- **Reports:** recovery reports with case number and examiner fields (PDF, HTML, CSV, JSON).
 
-\- \*\*Classification:\*\* extension- and entropy-based classification and corruption checks (heuristics, not machine learning).
+- **Classification:** extension- and entropy-based classification and corruption checks (heuristics, not machine learning).
 
 
 
@@ -70,7 +70,7 @@ Python 3.10 or newer.
 
 
 
-\*\*Source must be a disk image or a drive.\*\* Pointing the GUI at an ordinary folder only copies files that still exist and cannot recover deleted ones.
+**Source must be a disk image or a drive.** Pointing the GUI at an ordinary folder only copies files that still exist and cannot recover deleted ones.
 
 
 
@@ -80,13 +80,13 @@ GUI:
 
 ```bash
 
-python ever\_recover.py
+python ever_recover.py
 
 ```
 
 
 
-Open \*\*Settings\*\*, choose a disk image as the source (click \*\*Browse\*\*, cancel the folder dialog, then pick the image file in the second dialog), pick an existing output folder on a \*different\* drive, click \*\*Apply Settings\*\*, then run the scan from the \*\*Dashboard\*\*.
+Open **Settings**, choose a disk image as the source (click **Browse**, cancel the folder dialog, then pick the image file in the second dialog), pick an existing output folder on a *different* drive, click **Apply Settings**, then run the scan from the **Dashboard**.
 
 
 
@@ -130,21 +130,21 @@ Regression tests include byte-exact (SHA-256) recovery of carved JPEG, AVI and M
 
 
 
-\- APFS and HFS+ are not implemented; they report an error instead of pretending to scan.
+- APFS and HFS+ are not implemented; they report an error instead of pretending to scan.
 
-\- The Windows drive-access code (UAC elevation, `\\\\.\\PhysicalDriveN`, removable-drive detection) has not been tested on real hardware. Test on disk images first.
+- The Windows drive-access code (UAC elevation, `\\.\PhysicalDriveN`, removable-drive detection) has not been tested on real hardware. Test on disk images first.
 
-\- On ext4, deleted files often have their size and extent pointers cleared by the filesystem, so metadata recovery can fail and carving is the fallback.
+- On ext4, deleted files often have their size and extent pointers cleared by the filesystem, so metadata recovery can fail and carving is the fallback.
 
-\- Footer-based carving (e.g. JPEG) can be fooled by an embedded thumbnail's end marker.
+- Footer-based carving (e.g. JPEG) can be fooled by an embedded thumbnail's end marker.
 
-\- ext4 64-bit block group descriptors and large indexed (htree) directories are not supported.
+- ext4 64-bit block group descriptors and large indexed (htree) directories are not supported.
 
-\- Carving random or heavily compressed data produces many false positives.
+- Carving random or heavily compressed data produces many false positives.
 
 
 
-More detail: \[CHANGES\_AND\_LIMITATIONS.md](CHANGES\_AND\_LIMITATIONS.md).
+More detail: [CHANGES_AND_LIMITATIONS.md](CHANGES_AND_LIMITATIONS.md).
 
 
 
@@ -152,5 +152,5 @@ More detail: \[CHANGES\_AND\_LIMITATIONS.md](CHANGES\_AND\_LIMITATIONS.md).
 
 
 
-MIT. See \[LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
 
